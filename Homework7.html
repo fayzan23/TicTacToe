@@ -1,0 +1,231 @@
+<!-- Homework 7 – COSC 2328 – Professor McCurry -->
+<!-- Implemented by - Fayzan Bhatti -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Homework 7</title>
+</head>
+
+  <body style="background-color:rgb(234, 130, 130);">
+
+    <header style="font-size: xx-large; text-align: center; font-weight: bolder;">Tic-Tac-Toe</header>
+    <br>
+
+    <table border="5" align="center" style="border-color:black;">
+
+      <!-- First Row-->
+      <tr>
+
+          <td>
+            <img  src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+          <td>
+            <img src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+          <td>
+            <img src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+      </tr>
+
+      <!-- Second Row-->
+      <tr>
+
+          <td>
+            <img src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+          <td>
+            <img src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+          <td>
+            <img src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+      </tr>
+
+      <!-- Third Row-->
+      <tr>
+
+          <td>
+            <img src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+          <td>
+            <img src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+          <td>
+            <img src="blankBoard.jpg" alt="" height="150px" width="150px" />
+          </td>
+
+      </tr>
+        </table>
+
+        <h2 style="font-size:x-large; text-align: center;"></h2>
+
+        <p style="font-size: x-large; font-weight: bold; text-align:center;"></p>
+
+        <div style="text-align:center;">
+        <button style="font-size: large; background-color: black; color:rgb(234, 130, 130);">New Game</button>
+        </div>
+
+        <script>
+
+          const squares = document.querySelectorAll("img");
+
+          let player = "o.jpg";
+
+          let winCount = 0;
+
+          let numOfXwins = 0;
+
+          let numofOwins = 0;
+
+          let draws = 0;
+          
+          for (const square of squares) {
+
+            square.addEventListener("mouseenter + mouseleave", () => {
+
+          if (square.src.includes("blankBoard.jpg")) {
+
+            square.src = player;
+
+          if (player == "o.jpg") {
+
+          player = "x.jpg";
+
+          } else {
+
+          player = "o.jpg";
+
+          }
+
+          winCount++;
+
+          const winner = checkWinner();
+
+          if (winner) {
+
+          const name = winner.includes("x") ? "X" : "O";
+          document.querySelector("h2").innerHTML = "Player " + "(" + name + ")" + " Has Won the Game! ";
+
+          if (name == "X") {
+
+          numOfXwins++;
+
+          } else {
+
+          numofOwins++;
+
+          }
+
+          result();
+
+          }
+
+          if (winCount == 9) {
+
+          draws++;
+
+          document.querySelector("h2").innerHTML = "The Game is a Draw!";
+
+          }
+
+          result();
+            
+          }
+
+        });
+
+      }
+        function checkWinner() {
+        const winning = [
+
+        [0, 1, 2],
+
+        [3, 4, 5],
+
+        [6, 7, 8],
+
+        [0, 3, 6],
+
+        [1, 4, 7],
+
+        [2, 5, 8],
+
+        [0, 4, 8],
+
+        [2, 4, 6]
+
+      ];
+
+      for (const possibility of winning) {
+
+      const player = squares[possibility[0]].src;
+
+      let winner = true;
+
+      for (let i = 0; i < possibility.length; i++) {
+
+      if (squares[possibility[i]].src.includes("blankBoard")) {
+
+      winner = false;
+
+      break;
+
+      }
+
+      if (squares[possibility[i]].src !== player) {
+
+      winner = false;
+
+      break;
+
+    }
+
+  }
+      if (winner) {
+
+      return player;
+
+    }
+
+  }
+    return null;
+
+  }
+  function result() {
+
+    document.querySelector("p").innerHTML = "X: " + numOfXwins + " Wins " + "<br/>"  + " O: " + numofOwins + " Wins " + "<br/>" + "Draws: " + draws;
+    }
+
+    function reset() {
+
+    for (const square of squares) {
+
+      square.src = "blankBoard.jpg";
+      }
+
+      winCount = 0;
+
+      player = "x.jpg";
+
+      document.querySelector("h2").innerHTML = "";
+
+      result();
+
+      }
+
+      reset();
+
+      document.querySelector("button").addEventListener("click", reset);
+
+    </script>
+  </body>
+</html>
